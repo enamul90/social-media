@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .menu{
+        @apply
+        w-fit flex flex-wrap gap-3 items-center px-4 py-2 text-neutral-700
+        hover:bg-sky-100 hover:text-neutral-900 rounded-full cursor-pointer;
+    }
+    .menu-active{
+        @apply flex flex-wrap gap-3 items-center px-4 py-2 text-neutral-900  rounded-full cursor-pointer;
+    }
+
+    .author-tab{
+        @apply lg:block my-1 w-full px-3 py-2 lg:rounded-s  text-white font-semibold text-lg hover:bg-white hover:text-sky-500 ;
+    }
+    .author-tab-active{
+        @apply lg:block my-1 w-full px-4 py-2 lg:rounded-s font-semibold bg-white text-lg text-sky-500 ;
+    }
+
+    .profile-tab-active{
+        @apply text-lg font-medium text-sky-500 border-b-2 border-sky-500 p-2 cursor-pointer;
+    }
+    .profile-tab{
+        @apply text-lg font-medium text-neutral-700 p-2 cursor-pointer;
+    }
+}
+
+
+
+body{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+.loader {
+    width: 24px;
+    padding: 5px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #ffffff;
+    --_m:
+            conic-gradient(rgba(116, 114, 114, 0) 10%, #000000),
+            linear-gradient(#000000 0 0) content-box;
+    -webkit-mask: var(--_m);
+    mask: var(--_m);
+    -webkit-mask-composite: source-out;
+    mask-composite: subtract;
+    animation: l3 1s infinite linear;
+}
+
+.loader-dark {
+    width: 20px;
+    padding: 4px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #835cfa;
+    --_m:
+            conic-gradient(rgba(132, 132, 132, 0) 10%, #2e2e2e),
+            linear-gradient(#404040 0 0) content-box;
+    -webkit-mask: var(--_m);
+    mask: var(--_m);
+    -webkit-mask-composite: source-out;
+    mask-composite: subtract;
+    animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {to{transform: rotate(1turn)}}
+
+button{
+    outline:none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 125%!important;
+}
+
+.bg-blur{
+    backdrop-filter: blur(10px);
+}
+
+.scroll-bar-hidden {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+input, select, textarea {
+    outline: none !important;
+}
