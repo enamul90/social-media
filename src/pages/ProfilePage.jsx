@@ -13,19 +13,19 @@ import FollowingListComponent from "@/Component/users/FollowingListComponent.jsx
 const ProfilePage = () => {
     const {user} = useParams();
     const {myPostReq} = postStore()
-    const {readProfileReq ,  myProfileData,followersReq ,followingListReq}= authorStore()
+    const {readProfileReq , followersReq ,followingListReq}= authorStore()
     const {profile_tab} = uiManage()
 
+    let userName = localStorage.getItem('userName');
 
     useEffect(() => {
         (
             async ()=>{
                 await readProfileReq(user)
                 if(user === "me"){
-                    await myPostReq(myProfileData.username);
-                    await followersReq(myProfileData.username);
-                    await followingListReq(myProfileData.username);
-
+                    await myPostReq(userName);
+                    await followersReq(userName);
+                    await followingListReq(userName);
                 }
                 else {
                     await myPostReq(user);
@@ -35,6 +35,7 @@ const ProfilePage = () => {
             }
         )()
     }, [user]);
+
 
     return (
         <Layout>

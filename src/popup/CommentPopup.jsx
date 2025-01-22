@@ -17,11 +17,15 @@ const CommentPopup = () => {
     const [image, setImage] = useState(null);
     const [showPicker, setShowPicker] = useState(false);
 
-    const {setCommentPostData,  commentPostData, clearCommentPostData , commentPostReq , myPostReq,commentListReq, commentList, newsFeedReq  } = postStore()
+    const {setCommentPostData,  commentPostData, clearCommentPostData , commentPostReq , myPostReq,commentListReq, commentList, newsFeedReq, deletePostCommentReq  } = postStore()
     const {myProfileData} = authorStore()
     const id =  commentPostData.id
 
     const [loader, setLoader] = useState(false)
+    const [deleteLoader, setDeleteLoader] = useState({
+        status : false,
+        id: null
+    })
 
     useEffect(() => {
         (
@@ -31,9 +35,11 @@ const CommentPopup = () => {
         )()
     }, []);
 
-    console.log(commentList)
 
     const handleEmojiClick = (emojiData) => {
+        if(commentPostData.comment === undefined){
+            commentPostData.comment = ""
+        }
         let newCommentPostData = commentPostData.comment + (emojiData.emoji)
         setCommentPostData("comment", newCommentPostData);
         setShowPicker(false);
@@ -76,10 +82,34 @@ const CommentPopup = () => {
         else {
             toast.error('Comment Create Failed')
         }
-
-
-
     }
+
+    const deleteComment = async (id) => {
+        setDeleteLoader(
+            {
+                status : true,
+                 id: id
+            }
+        )
+        
+          const postId = commentPostData.id
+          let res = await deletePostCommentReq(postId,id)
+          setDeleteLoader(
+            {
+                status :false,
+                 id: null,
+            }
+          )
+          if(res){
+              toast.success('Comment Delete Successfully')
+            //   await commentListReq (id)
+          }
+          else {
+              toast.error('Comment Delete Failed')
+          }
+    }
+
+
     return (
         <div
             className="h-screen w-screen absolute top-0 right-0 bg- z-[9999999999999] bg-white bg-opacity-60
@@ -140,10 +170,23 @@ const CommentPopup = () => {
                                             {item.comment}
                                         </p>
 
-                                        <div className="flex justify-end items-center gap-3 my-1">
-                                            <button><RiEdit2Fill className="text-lg font-semibold"/></button>
-                                            <button><AiFillDelete className="text-lg font-semibold"/></button>
-                                        </div>
+                                        {
+                                            item.isComment && (
+                                                <div className="flex justify-end items-center gap-3 my-1">
+                                                <button><RiEdit2Fill className="text-lg font-semibold"/></button>
+                                                <button
+                                                    onClick={
+                                                        ()=>deleteComment(item._id)
+                                                    }
+                                                >
+                                                    { 
+                                                        deleteLoader.status &&  (deleteLoader.id === item._id) ? <div className="loader-dark"></div> : <AiFillDelete className="text-lg font-semibold"/>
+                                                    }
+                                                    
+                                                </button>
+                                            </div>
+                                            )
+                                        }
                                     </div>
 
                                 </div>

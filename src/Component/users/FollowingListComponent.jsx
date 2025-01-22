@@ -1,25 +1,26 @@
 import {motion} from "framer-motion";
 import authorStore from "@/store/authorStore.js";
 
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 import {useState} from "react";
 import LoadingButtonFit from "@/Component/button/LoadingButtonFit.jsx";
+import { useParams } from "react-router-dom";
 
 const SearchResultComponent = () => {
-    const {url} = useParams();
+    let userName = localStorage.getItem('userName');
+    const {user} = useParams();
     const navigate = useNavigate();
     const [followLoader, setFollowLoader] = useState({
         status : false,
         id: null
     });
 
-    const {  followingList , flowReq ,followingListReq,myProfileData } = authorStore()
+    const {  followingList , flowReq ,followingListReq,  readProfileReq } = authorStore()
 
-    const {readProfileReq} = authorStore()
 
-    const goToProfile = ( user)=>{
-        navigate("/profile/"+user)
+    const goToProfile = (url)=>{
+        navigate("/profile/"+url)
     }
 
     const followHandel = async (id)=>{
@@ -37,13 +38,13 @@ const SearchResultComponent = () => {
             }
         )
         if(res){
-            await readProfileReq(url)
-            if(url === "me"){
-                await followingListReq(myProfileData.username);
+            await readProfileReq(user)
+            if(user === "me"){
+                await followingListReq(userName);
 
             }
             else {
-                await followingListReq(url);
+                await followingListReq(user);
             }
             toast.success("Following Successful")
 
@@ -153,7 +154,7 @@ const SearchResultComponent = () => {
                                             onClick={() => followHandel(user._id)}
                                             className="hover:text-sky-500 text-base"
                                         >
-                                            UnFollow
+                                            Unfollow
                                         </button>
                                     )
                                 }

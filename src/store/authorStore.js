@@ -13,7 +13,7 @@ const Follow_api = Base_url + "user/profile/follow/";
 const Suggest_user_api = Base_url + "user/suggest";
 const Search_user_api = Base_url + "user/search";
 const follower_list_api = Base_url + "user/followers/";
-const followeing_list_api = Base_url + "user/following/";
+const following_list_api = Base_url + "user/following/";
 
 
 
@@ -84,6 +84,7 @@ const authorStore = create((set) => ({
 
             let me =  await axios.get(Read_Profile_api +"me",  {withCredentials: true})
             set({myProfileData: me.data.profile[0]})
+            localStorage.setItem('userName', me.data.profile[0].username);
 
             return true
         }
@@ -151,7 +152,7 @@ const authorStore = create((set) => ({
     followingList: null,
     followingListReq : async (data)=>{
         try{
-            const res =  await axios.get(followeing_list_api + data, {withCredentials: true})
+            const res =  await axios.get(following_list_api + data, {withCredentials: true})
             set({followingList: res.data.following})
             return true
         }

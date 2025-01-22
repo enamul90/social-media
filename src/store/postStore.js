@@ -10,9 +10,11 @@ const Update_Post_Api= Base_url + "user/post/update/";
 const Delete_Post_Api= Base_url + "user/post/delete/";
 const Like_Post_Api= Base_url + "user/post/like/";
 const CommentList_Post_Api= Base_url + "user/post/comment/view/";
+const Post_Comment_delete_api= Base_url + "user/post/comment/delete/"
 const Comment_Post_Api= Base_url + "user/post/comment/";
 const Save_Post_Api= Base_url + "user/post/save/";
 const Save_Post_list_Api= Base_url + "user/save/post";
+
 
 const postStore  = create((set) => ({
 
@@ -150,6 +152,19 @@ const postStore  = create((set) => ({
         }
     },
 
+    deletePostCommentReq: async(postId , id)=>{
+        let api = Post_Comment_delete_api + postId; + "/" + id;
+        try {
+            await axios.delete(api, {withCredentials:true} );
+            return true
+        }
+        catch {
+            return false;
+        }
+
+    },
+
+
     savePostReq : async (id)=>{
         try {
             await axios.put( Save_Post_Api + id , " ",{withCredentials:true} );
@@ -170,9 +185,7 @@ const postStore  = create((set) => ({
         catch {
             return false;
         }
-    }
-
-
+    },
 
 }))
 
