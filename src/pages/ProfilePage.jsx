@@ -8,6 +8,8 @@ import {useParams} from "react-router-dom";
 import uiManage from "@/store/uiManage.js";
 import FollowersListComponent from "@/Component/users/FollowersListComponent.jsx";
 import FollowingListComponent from "@/Component/users/FollowingListComponent.jsx";
+import PersonalInfoComponent from "../Component/users/PersonalInfoComponent";
+import SocialMediaComponent from "../Component/users/SocialMediaComponent";
 
 
 const ProfilePage = () => {
@@ -49,6 +51,13 @@ const ProfilePage = () => {
             }
             {
                 profile_tab === "following" && <FollowingListComponent />
+            }
+
+            {
+                profile_tab === "about" && <PersonalInfoComponent />
+            }
+            {
+                profile_tab === "about" && <SocialMediaComponent />
             }
 
         </Layout>

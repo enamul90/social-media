@@ -172,8 +172,6 @@ const postStore  = create((set) => ({
         const Comment = data.comment
         const commentId = data.commentId
         let api = Post_Comment_Update_api + PostId + "/" + commentId;
-
-        console.log(Comment)
         
         try {
             await axios.put(api, Comment, {withCredentials:true} );

@@ -16,7 +16,7 @@ const UserInfo = () => {
     const navigate = useNavigate();
     const {user} = useParams();
     const {profileData ,flowReq ,readProfileReq} = authorStore()
-    const {set_profile_tab, profile_tab} = uiManage()
+    const {set_profile_tab, profile_tab , set_edit_profile_Ui_Control} = uiManage()
 
     if(profileData === null || profileData === undefined) {
         return (
@@ -47,6 +47,7 @@ const UserInfo = () => {
                     {
                         user === "me" ? (
                             <button
+                                onClick={() => set_edit_profile_Ui_Control(true)}
                                 className="
                                              absolute top-0 right-0
                                              text-base font-medium text-neutral-700 py-1 px-3 border-2 border-neutral-500

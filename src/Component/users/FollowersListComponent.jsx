@@ -152,7 +152,10 @@ const SearchResultComponent = () => {
                                             onClick={() => followHandel(user._id)}
                                             className="hover:text-sky-500 text-base"
                                         >
-                                            FlowBack
+                                            {
+                                                user.isFollowing ? "Unfollow" : "FlowBack"
+                                            }
+                                            
                                         </button>
                                     )
                                 }

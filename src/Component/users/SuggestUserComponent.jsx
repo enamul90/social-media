@@ -107,7 +107,9 @@ const SuggestUserComponent = () => {
                                                     onClick={() => followHandel(value._id)}
                                                     className="hover:text-sky-500"
                                                 >
-                                                    Flowing
+                                                   {
+                                                     value.isFollowing ? "follow" : "Unfollow"
+                                                   }
                                                 </button>
                                             )
                                         }

@@ -8,6 +8,8 @@ const Sign_up_api = Base_url + "user/auth/signup"
 const Login_api = Base_url + "user/auth/login";
 const SignOut_api = Base_url + "user/auth/logout";
 const Read_Profile_api = Base_url + "user/profile/";
+const Profile_Update_api = Base_url + "user/profile/pic/update";
+const Profile_info_update_api = Base_url + "user/profile/info/update"
 
 const Follow_api = Base_url + "user/profile/follow/";
 const Suggest_user_api = Base_url + "user/suggest";
@@ -75,6 +77,24 @@ const authorStore = create((set) => ({
 
     profileData: null,
     myProfileData: null,
+    updateProfileData: (name,value)=>{
+        set((state)=>({
+            myProfileData:{
+                ...state.myProfileData , [name]:value
+            }
+        }))
+    },
+
+    updateProfileReq : async (data)=>{
+        console.log(data)
+        try {
+            await axios.put(Profile_info_update_api, data , {withCredentials:true});
+            return true
+        } 
+        catch  {
+            return true
+        }
+    },
 
     readProfileReq : async (user)=>{
         try {
@@ -92,6 +112,32 @@ const authorStore = create((set) => ({
             return false
         }
     },
+
+    profileUpdateData: null,
+    setProfileUpdateData: (name,value)=>{
+        set((state)=>({
+            profileUpdateData:{
+                ...state.profileUpdateData , [name]:value
+            }
+    
+        }))
+    },
+    updateProfileRuq:async(cover, profile)=>{
+
+        let formData = new FormData();
+        formData.append("profile", profile);
+        formData.append("cover", cover);
+
+        try {
+            await axios.put(Profile_Update_api, formData, {withCredentials: true})
+            return true
+        }
+        catch{
+            return false
+        }
+
+    } ,
+        
 
     flowReq : async (id)=>{
         try {
@@ -160,10 +206,6 @@ const authorStore = create((set) => ({
             return false
         }
     }
-
-
-
-
 
 }))
 
