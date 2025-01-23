@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import uiManage from "../../store/uiManage.js";
 import authorStore from "@/store/authorStore.js";
 import toast from "react-hot-toast";
@@ -8,7 +8,7 @@ import LoadingButton from "@/Component/button/LoadingButton.jsx";
 
 const SignIn = () => {
     const navigate = useNavigate();
-    const {setAuthor}= uiManage()
+    const {setAuthor, setSendOpt}= uiManage()
     const {setLoginForm , loginForm,loginReq ,} = authorStore()
     const [loading, setLoading] = React.useState(false);
 
@@ -28,6 +28,7 @@ const SignIn = () => {
         }
     }
 
+    const forgotPasswordHandler = async () => {setSendOpt(true)}
     return (
         <div className="h-full flex flex-col justify-center items-center">
             <div className="max-w-[530px] w-full px-5 md:mx-auto ">
@@ -49,7 +50,7 @@ const SignIn = () => {
                             </label>
                             <input
                                 value={loginForm.username}
-                                onChange={(e)=>setLoginForm("username", e.target.value)}
+                                onChange={(e) => setLoginForm("username", e.target.value)}
                                 id="email"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
                                 placeholder="Enter your email"
@@ -66,29 +67,16 @@ const SignIn = () => {
                                 type="password"
                                 id="password"
                                 value={loginForm.password}
-                                onChange={(e)=>setLoginForm("password", e.target.value)}
+                                onChange={(e) => setLoginForm("password", e.target.value)}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
                                 placeholder="Enter your password"
                             />
                         </div>
-                        <div className="flex items-center justify-between mb-4">
-                            <label className="flex items-center text-sm text-gray-600">
-                                <input
-                                    type="checkbox"
-                                    className="mr-2 h-4 w-4 border-gray-300 rounded"
-                                />
-                                Remember me
-                            </label>
-                            <a
-                                className="text-sm text-sky-500 hover:underline"
-                            >
-                                Forgot password?
-                            </a>
-                        </div>
+
 
                         {
                             loading ? (
-                                    <LoadingButton text="sign in" />
+                                <LoadingButton text="sign in"/>
                             ) : (
                                 <button
                                     type="submit"
@@ -98,14 +86,32 @@ const SignIn = () => {
                             flex items-center justify-center gap-3 opacity-70
                             "
                                 >
-                                   Sign in
+                                    Sign in
 
                                 </button>
                             )
                         }
 
-
                     </form>
+
+                    <div className="flex items-center justify-between mb-4 mt-3">
+                        <label className="flex items-center text-sm text-gray-600">
+                            <input
+                                type="checkbox"
+                                className="mr-2 h-4 w-4 border-gray-300 rounded"
+                            />
+                            Remember me
+                        </label>
+                        <button
+                            onClick={
+                                forgotPasswordHandler
+                            }
+                            className="text-sm text-sky-500 hover:underline cursor-pointer"
+                        >
+                            Forgot password?
+                        </button>
+
+                    </div>
                     <p className="text-center text-sm text-gray-600 mt-6">
                         Don't have an account?{" "}
                         <a

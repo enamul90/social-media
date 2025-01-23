@@ -116,7 +116,7 @@ const UserInfo = () => {
                         </div>
                     </div>
 
-                    <div className="p-3 my-3 bg-gray-100 rounded">
+                    <div className="p-3 my-3 bg-gray-100 rounded ">
                         {
                             profileData.bio === "" ?
                                 <h1 className="text-sm font-medium text-neutral-700">Please add bio</h1> : (

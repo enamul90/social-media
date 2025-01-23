@@ -12,6 +12,7 @@ import {useParams} from "react-router-dom";
 import authorStore from "@/store/authorStore.js";
 
 const CommentPopup = () => {
+    
     const {user} = useParams();
     const path = window.location.pathname;
     const [image, setImage] = useState(null);
@@ -252,7 +253,7 @@ const CommentPopup = () => {
                             flex flex-row justify-center items-center"
                         >
                             <img
-                                src="/image/profile.jpg"
+                                src={myProfileData.profile}
                                 alt="profile image"
                                 className="min-w-full min-h-full "
                             />

@@ -38,6 +38,7 @@ body{
 
 .loader {
     width: 24px;
+    height: 24px;
     padding: 5px;
     aspect-ratio: 1;
     border-radius: 50%;

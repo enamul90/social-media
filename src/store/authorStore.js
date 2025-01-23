@@ -1,5 +1,6 @@
 import {create} from "zustand";
 import axios from "axios";
+import OtpRequestPopup from "@/popup/OtpRequestPopup.jsx";
 
 
 
@@ -7,6 +8,9 @@ const Base_url = "https://matrix-media.up.railway.app/api/v1/"
 const Sign_up_api = Base_url + "user/auth/signup"
 const Login_api = Base_url + "user/auth/login";
 const SignOut_api = Base_url + "user/auth/logout";
+const Otp_Request_api = Base_url + "user/auth/forger/password/";
+const password_Request_api = Base_url + "user/auth/forger/password";
+
 const Read_Profile_api = Base_url + "user/profile/";
 const Profile_Update_api = Base_url + "user/profile/pic/update";
 const Profile_info_update_api = Base_url + "user/profile/info/update"
@@ -72,6 +76,36 @@ const authorStore = create((set) => ({
         catch {
             return false
         }
+    },
+
+    otpSentData : null,
+    setOtpSentData:(name,value)=>{
+        set((state)=>({
+            otpSentData:{
+                ...state.otpSentData , [name]:value
+            }
+        }))
+    },
+
+    otpReq : async (data)=>{
+        try {
+            await axios.post( Otp_Request_api+ data , " ", {withCredentials: true})
+            return true
+        }
+        catch {
+            return false
+        }
+    },
+
+    passwordReq : async (data)=>{
+        try {
+            await axios.put( password_Request_api , data, {withCredentials: true})
+            return true
+        }
+        catch {
+            return false
+        }
+
     },
 
 
