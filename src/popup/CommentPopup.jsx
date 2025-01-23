@@ -17,7 +17,7 @@ const CommentPopup = () => {
     const [image, setImage] = useState(null);
     const [showPicker, setShowPicker] = useState(false);
 
-    const {setCommentPostData,  commentPostData, clearCommentPostData , commentPostReq , myPostReq,commentListReq, commentList, newsFeedReq, deletePostCommentReq  } = postStore()
+    const {setCommentPostData,  commentPostData, clearCommentPostData , commentPostReq , myPostReq,commentListReq, commentList, newsFeedReq, deletePostCommentReq, updateComment} = postStore()
     const {myProfileData} = authorStore()
     const id =  commentPostData.id
 
@@ -61,27 +61,53 @@ const CommentPopup = () => {
     const submitComment = async () => {
 
         setLoader(true)
-        let res = await commentPostReq(commentPostData);
-        setLoader(false)
-        if(res){
-            if(path === "/"){
-                await newsFeedReq()
-            }
-            else {
-                if(user !== "me"){
-                    await myPostReq(user);
 
+        if( commentPostData.commentId === undefined){
+            let res = await commentPostReq(commentPostData);
+            if(res){
+                if(path === "/"){
+                    await newsFeedReq()
                 }
                 else {
-                    await myPostReq(myProfileData.username);
+                    if(user !== "me"){
+                        await myPostReq(user);
+    
+                    }
+                    else {
+                        await myPostReq(myProfileData.username);
+                    }
                 }
+                clearCommentPostData(null)
+                toast.success('Comment Create Successfully')
             }
-            clearCommentPostData(null)
-            toast.success('Comment Create Successfully')
+            else {
+                toast.error('Comment Create Failed')
+            }
         }
-        else {
-            toast.error('Comment Create Failed')
+        else{
+            let res = await updateComment(commentPostData);
+            if(res){
+                if(path === "/"){
+                    await newsFeedReq()
+                }
+                else {
+                    if(user !== "me"){
+                        await myPostReq(user);
+    
+                    }
+                    else {
+                        await myPostReq(myProfileData.username);
+                    }
+                }
+                clearCommentPostData(null)
+                toast.success('Comment Update Successfully')
+            }
+            else {
+                toast.error('Comment Update Failed')
+            }
         }
+        
+        setLoader(false)
     }
 
     const deleteComment = async (id) => {
@@ -102,17 +128,24 @@ const CommentPopup = () => {
           )
           if(res){
               toast.success('Comment Delete Successfully')
-            //   await commentListReq (id)
+              await commentListReq (postId)
           }
           else {
               toast.error('Comment Delete Failed')
           }
     }
 
+    const editComment = (id , data)=>{
+        setCommentPostData("comment", data )
+        setCommentPostData("commentId", id )
+
+    }
+    
+
 
     return (
         <div
-            className="h-screen w-screen absolute top-0 right-0 bg- z-[9999999999999] bg-white bg-opacity-60
+            className="h-screen w-screen absolute top-0 right-0 bg- z-[9999999] bg-white bg-opacity-60
             mx-auto flex justify-center items-center overflow-hidden
             "
         >
@@ -173,7 +206,11 @@ const CommentPopup = () => {
                                         {
                                             item.isComment && (
                                                 <div className="flex justify-end items-center gap-3 my-1">
-                                                <button><RiEdit2Fill className="text-lg font-semibold"/></button>
+                                                <button
+                                                    onClick={()=>editComment(item._id, item.comment)}
+                                                >
+                                                    <RiEdit2Fill className="text-lg font-semibold"/>
+                                                    </button>
                                                 <button
                                                     onClick={
                                                         ()=>deleteComment(item._id)
@@ -290,7 +327,10 @@ const CommentPopup = () => {
                             hover:bg-sky-500 hover:text-sky-50
                             "
                                 >
-                                    Comment
+                                    {
+                                        commentPostData.commentId !== undefined ?" Update" :" Comment"
+                                    }
+                                    
                                 </button>
                             )
                         }

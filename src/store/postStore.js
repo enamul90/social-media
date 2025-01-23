@@ -2,6 +2,7 @@ import {create} from "zustand";
 import axios from "axios";
 
 
+
 const Base_url = "https://matrix-media.up.railway.app/api/v1/"
 const Create_Post_Api= Base_url + "user/post/create";
 const My_Post_Api= Base_url + "/user/post/read/";
@@ -11,6 +12,7 @@ const Delete_Post_Api= Base_url + "user/post/delete/";
 const Like_Post_Api= Base_url + "user/post/like/";
 const CommentList_Post_Api= Base_url + "user/post/comment/view/";
 const Post_Comment_delete_api= Base_url + "user/post/comment/delete/"
+const Post_Comment_Update_api= Base_url + "user/post/comment/update/"
 const Comment_Post_Api= Base_url + "user/post/comment/";
 const Save_Post_Api= Base_url + "user/post/save/";
 const Save_Post_list_Api= Base_url + "user/save/post";
@@ -153,7 +155,8 @@ const postStore  = create((set) => ({
     },
 
     deletePostCommentReq: async(postId , id)=>{
-        let api = Post_Comment_delete_api + postId; + "/" + id;
+
+        let api = Post_Comment_delete_api + postId + "/" + id;
         try {
             await axios.delete(api, {withCredentials:true} );
             return true
@@ -164,6 +167,24 @@ const postStore  = create((set) => ({
 
     },
 
+    updateComment : async (data)=>{
+        const PostId = data.id
+        const Comment = data.comment
+        const commentId = data.commentId
+        let api = Post_Comment_Update_api + PostId + "/" + commentId;
+
+        console.log(Comment)
+        
+        try {
+            await axios.put(api, Comment, {withCredentials:true} );
+            return true
+        } 
+        catch {
+            return false;
+        }
+
+
+    },
 
     savePostReq : async (id)=>{
         try {
@@ -190,4 +211,4 @@ const postStore  = create((set) => ({
 }))
 
 
-export default postStore;
+export default postStore;    
