@@ -135,7 +135,7 @@ const postStore  = create((set) => ({
             commentPostData:{
                 ...state.commentPostData , [name]:value
             }
-        }))
+        })) 
     },
 
     commentPostReq : async (data)=>{
