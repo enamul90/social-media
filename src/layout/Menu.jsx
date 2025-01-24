@@ -4,12 +4,14 @@ import {FaBookmark, FaSearch, FaSignOutAlt, FaUser, FaUsers} from "react-icons/f
 import {RiMessage3Fill, RiStickyNoteAddFill} from "react-icons/ri";
 import {IoSettingsSharp} from "react-icons/io5";
 import{motion} from "framer-motion";
-import {useNavigate} from "react-router-dom";
+import {useNavigate,} from "react-router-dom";
 import authorStore from "@/store/authorStore.js";
 import {useState} from "react";
 import toast from "react-hot-toast";
 
 const Menu = () => {
+
+    let userName = localStorage.getItem('userName');
     const {SignOutReq} = authorStore()
     const navigate = useNavigate();
     const pathname = window.location.pathname;
@@ -64,7 +66,9 @@ const Menu = () => {
                             duration: 0.3,
                             scale: {type: "spring", visualDuration: 0.3, bounce: 0.5},
                         }}
-                        className="menu mb-3"
+                        onClick={() => navigate("/notification")}
+                        className={pathname === "/notification" ? "menu-active mb-3" :"menu mb-3"}
+
                     >
                         <IoMdNotifications className="text-xl font-medium "/>
                         <h3 className="text-lg font-medium  ">Notification</h3>
@@ -141,7 +145,7 @@ const Menu = () => {
                             scale: {type: "spring", visualDuration: 0.3, bounce: 0.5},
                         }}
                         className={pathname === "/profile" ? "menu-active mb-3" :"menu mb-3"}
-                        onClick={() => navigate("/profile/me")}
+                        onClick={() => navigate("/profile/"+userName)}
                     >
                         <FaUser className="text-xl font-medium "/>
                         <h3 className="text-lg font-medium  ">Profile</h3>

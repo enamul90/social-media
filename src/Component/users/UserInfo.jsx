@@ -12,6 +12,7 @@ import LoadingButtonFit from "@/Component/button/LoadingButtonFit.jsx";
 import uiManage from "@/store/uiManage.js";
 
 const UserInfo = () => {
+
     const [loader, setLoader] = useState(false);
     const navigate = useNavigate();
     const {user} = useParams();
@@ -94,7 +95,7 @@ const UserInfo = () => {
                     </h1>
 
                     {
-                        user === "me" ? (
+                        user === profileData.username ? (
                             <button
                                 onClick={() => set_edit_profile_Ui_Control(true)}
                                 className="

@@ -10,7 +10,7 @@ const SuggestUserComponent = () => {
         status : false,
         id: null
     });
-    const {suggestUser ,suggestUserReq , flowReq} = authorStore()
+    const {suggestUser ,suggestUserReq , flowReq ,update_suggestUser} = authorStore()
     useEffect(() => {
         (
           async  ()=>{
@@ -20,7 +20,7 @@ const SuggestUserComponent = () => {
     }, []);
 
 
-    const followHandel = async (id)=>{
+    const followHandel = async (id ,isFollowing)=>{
         setFollowLoader(
             {
                 status : true,
@@ -36,8 +36,7 @@ const SuggestUserComponent = () => {
         )
         if(res){
             toast.success("Following Successful")
-            await suggestUserReq()
-
+            isFollowing ?  update_suggestUser(id, {isFollowing :false}) : update_suggestUser(id, {isFollowing :true})
         }
         else{
             toast.error("Following Fail")
@@ -106,7 +105,7 @@ const SuggestUserComponent = () => {
                                         }}
                                         className="
                                          cursor-pointer
-                                         flex flex-row justify-start items-center gap-3 p-3 border rounded mb-2
+                                         flex flex-row justify-start items-center gap-3 p-3 border shadow rounded mb-2
                                          "
                                     >
                                         <div
@@ -134,16 +133,19 @@ const SuggestUserComponent = () => {
                                         </div>
 
                                         {
-                                            (followLoader.status) && (followLoader.id === value._id) ? <LoadingButtonFit /> : (
-                                                <button
-                                                    onClick={() => followHandel(value._id)}
-                                                    className="hover:text-sky-500"
-                                                >
-                                                   {
-                                                     value.isFollowing ? "follow" : "Unfollow"
-                                                   }
-                                                </button>
-                                            )
+                                            (followLoader.status) && (followLoader.id === value._id) ?
+                                                <div className="loader-dark me-5"></div>
+                                                :
+                                                (
+                                                    <button
+                                                        onClick={() => followHandel(value._id, value.isFollowing)}
+                                                        className="hover:text-sky-500 font-medium text-sm"
+                                                    >
+                                                        {
+                                                            value.isFollowing ? "Follow" : "Unfollow"
+                                                        }
+                                                    </button>
+                                                )
                                         }
 
 

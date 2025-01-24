@@ -41,7 +41,7 @@ const ProfileSummaryComponent = () => {
                         duration: 0.5,
                         scale: { type: "spring", visualDuration: 0.1, bounce: 0.1 },
                     }}
-                    className="mx-2 mt-2  rounded border-2 border-gray-100 overflow-hidden cursor-pointer
+                    className="mx-2 mt-2  rounded border-2 shadow border-gray-100 overflow-hidden cursor-pointer
                 "
                 >
 

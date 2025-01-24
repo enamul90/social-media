@@ -65,7 +65,7 @@ const AddPost = () => {
                     duration: 0.3,
                     scale: { type: "spring", visualDuration: 0.3, bounce: 0.5 },
                 }}
-                className="max-w-[560px] mx-auto mt-5 rounded shadow cursor-pointer p-5"
+                className="max-w-[560px] mx-auto mt-5 rounded shadow-md border cursor-pointer p-5"
             >
                 {showPicker && (
                     <div className=" absolute top-0 right-0 z-30" >

@@ -10,8 +10,8 @@ import postStore from "@/store/postStore.js";
 
 const HomePage = () => {
 
-    const{readProfileReq ,suggestUserReq}= authorStore()
-    const {newsFeedReq ,clear_my_post_data ,my_post_data} = postStore()
+    const{readProfileReq ,suggestUserReq,  clear_suggestUser}= authorStore()
+    const {newsFeedReq ,clear_my_post_data } = postStore()
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,9 +19,9 @@ const HomePage = () => {
         (
 
             async ()=>{
-                if(my_post_data  !== null){
-                    clear_my_post_data()
-                }
+                clear_my_post_data()
+                clear_suggestUser()
+
                 await suggestUserReq()
                 await newsFeedReq()
                 let res = await readProfileReq("me")

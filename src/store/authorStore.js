@@ -20,6 +20,7 @@ const Suggest_user_api = Base_url + "user/suggest";
 const Search_user_api = Base_url + "user/search";
 const follower_list_api = Base_url + "user/followers/";
 const following_list_api = Base_url + "user/following/";
+const image_Gallery_api = Base_url + "user/profile/post/images/";
 
 
 
@@ -110,6 +111,10 @@ const authorStore = create((set) => ({
 
 
     profileData: null,
+    clear_profileData : ()=>{
+        set({profileData : null})
+    },
+
     myProfileData: null,
     updateProfileData: (name,value)=>{
         set((state)=>({
@@ -185,6 +190,17 @@ const authorStore = create((set) => ({
 
 
     suggestUser : null,
+    clear_suggestUser : ()=>{
+        set({suggestUser : null})
+    },
+    update_suggestUser : (id, updatedFields) => {
+        set((state) => ({
+            suggestUser: state. suggestUser.map((item) =>
+                item._id === id ? { ...item, ...updatedFields } : item
+            ),
+        }));
+    },
+
     suggestUserReq : async ()=>{
         try {
            const res =  await axios.get(Suggest_user_api, {withCredentials: true})
@@ -218,6 +234,9 @@ const authorStore = create((set) => ({
     },
 
     followersList: null,
+    clear_followersList : ()=>{
+        set({followersList : null})
+    },
     followersReq : async (data)=>{
         try{
             const res =  await axios.get(follower_list_api + data, {withCredentials: true})
@@ -230,10 +249,28 @@ const authorStore = create((set) => ({
     },
 
     followingList: null,
+    clear_followingList : ()=>{
+        set({followingList : null})
+    },
     followingListReq : async (data)=>{
         try{
             const res =  await axios.get(following_list_api + data, {withCredentials: true})
             set({followingList: res.data.following})
+            return true
+        }
+        catch{
+            return false
+        }
+    },
+
+    imageGallery: null,
+    clear_imageGallery : ()=>{
+        set({imageGallery : null})
+    },
+    imageGalleryReq : async (user)=>{
+        try{
+            const res =  await axios.get(image_Gallery_api + user , {withCredentials: true})
+            set({imageGallery: res.data.images})
             return true
         }
         catch{

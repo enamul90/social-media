@@ -99,7 +99,7 @@ const PostCard = () => {
 
     setLoader({
       status: false,
-      id: id
+      id: null
     })
 
     let like = Like-1
@@ -115,7 +115,7 @@ const PostCard = () => {
     }
   }
 
-  if(my_post_data === null) {
+  if(my_post_data === null ) {
     return (
         Array.from({ length: 5 }).map((_, index) => (
             <div
@@ -167,7 +167,7 @@ const PostCard = () => {
                       duration: 0.3,
                       scale: {type: "spring", visualDuration: 0.3, bounce: 0.5},
                     }}
-                    className="max-w-[560px] pt-3 mt-3 rounded shadow-md mx-auto cursor-pointer"
+                    className="max-w-[560px] pt-3 mt-4 rounded shadow-lg mx-auto cursor-pointer border"
                 >
                   <div className="flex flex-row ms-3 me-5 gap-3 justify-start items-center">
                     <div className=" flex-shrink-0  h-[40px] w-[40px] rounded-full

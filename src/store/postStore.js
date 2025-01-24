@@ -35,7 +35,6 @@ const postStore  = create((set) => ({
     },
 
     my_post_data:null,
-
     clear_my_post_data : ()=>{
         set({my_post_data : null})
     },
@@ -182,12 +181,15 @@ const postStore  = create((set) => ({
 
     updateComment : async (data)=>{
         const PostId = data.id
-        const Comment = data.comment
+        const comment = {
+            comment: data.comment
+        }
         const commentId = data.commentId
+
         let api = Post_Comment_Update_api + PostId + "/" + commentId;
         
         try {
-            await axios.put(api, Comment, {withCredentials:true} );
+            await axios.put(api, comment, {withCredentials:true} );
             return true
         } 
         catch {
