@@ -11,7 +11,7 @@ import postStore from "@/store/postStore.js";
 const HomePage = () => {
 
     const{readProfileReq ,suggestUserReq}= authorStore()
-    const {newsFeedReq} = postStore()
+    const {newsFeedReq ,clear_my_post_data ,my_post_data} = postStore()
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,6 +19,9 @@ const HomePage = () => {
         (
 
             async ()=>{
+                if(my_post_data  !== null){
+                    clear_my_post_data()
+                }
                 await suggestUserReq()
                 await newsFeedReq()
                 let res = await readProfileReq("me")
@@ -34,7 +37,7 @@ const HomePage = () => {
         <Layout>
             <div className="flex flex-row items-center border-b-2 sticky top-0 bg-blur bg-white bg-opacity-20 z-[999999] ">
                 <button className="flex-grow py-4 text-lg font-medium  text-neutral-800 hover:bg-sky-50 ">
-                    Fore You
+                    For You
                 </button>
 
                 <button className="flex-grow py-4 text-lg font-medium text-neutral-600 hover:bg-sky-50 ">

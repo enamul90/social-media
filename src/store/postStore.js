@@ -35,6 +35,19 @@ const postStore  = create((set) => ({
     },
 
     my_post_data:null,
+
+    clear_my_post_data : ()=>{
+        set({my_post_data : null})
+    },
+
+    update_my_post_data : (id, updatedFields) => {
+        set((state) => ({
+            my_post_data: state. my_post_data.map((item) =>
+                item._id === id ? { ...item, ...updatedFields } : item
+            ),
+        }));
+    },
+
     myPostReq : async (user)=>{
         try{
             const res = await axios.get( My_Post_Api + user ,  {withCredentials:true} );

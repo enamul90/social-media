@@ -54,7 +54,39 @@ const SuggestUserComponent = () => {
                 <h1 className="mb-2 font-medium text-base text-neutral-700">SUGGESTED FOR YOU</h1>
 
                 {
-                    suggestUser === null && <h1>loading ...</h1>
+                    suggestUser === null && (
+                        <>
+                            {Array(5) // Replace `5` with the number of skeleton items you'd like to display.
+                                .fill(0)
+                                .map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className="
+                                          flex flex-row justify-start items-center gap-3 p-3 border rounded mb-2 animate-pulse
+                                        "
+                                    >
+                                        {/* Profile Picture Skeleton */}
+                                        <div
+                                            className="
+                                              h-[35px] w-[35px] flex items-center justify-center rounded-full bg-gray-300
+                                            "
+                                        >
+
+                                        </div>
+
+                                        {/* Text Skeleton */}
+                                        <div className="flex-grow space-y-1">
+                                            <div className="h-4 bg-gray-300 rounded w-2/3"></div>
+                                            <div className="h-3 bg-gray-300 rounded w-1/3"></div>
+                                        </div>
+
+                                        {/* Button Skeleton */}
+                                        <div className="h-6 w-16 bg-gray-300 rounded"></div>
+                                    </div>
+                                ))}
+                        </>
+
+                    )
                 }
 
 

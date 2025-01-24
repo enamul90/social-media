@@ -14,7 +14,7 @@ import PersonalInfoComponent from "../Component/users/PersonalInfoComponent";
 
 const ProfilePage = () => {
     const {user} = useParams();
-    const {myPostReq} = postStore()
+    const {myPostReq, my_post_data, clear_my_post_data} = postStore()
     const {readProfileReq , followersReq ,followingListReq}= authorStore()
     const {profile_tab} = uiManage()
 
@@ -23,6 +23,9 @@ const ProfilePage = () => {
     useEffect(() => {
         (
             async ()=>{
+                if(my_post_data  !== null){
+                    clear_my_post_data()
+                }
                 await readProfileReq(user)
                 if(user === "me"){
                     await myPostReq(userName);
