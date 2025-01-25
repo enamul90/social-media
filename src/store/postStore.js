@@ -223,6 +223,14 @@ const postStore  = create((set) => ({
     },
 
     Single_Post_Data: null,
+    update_Single_Post_data : (id, updatedFields) => {
+        set((state) => ({
+            Single_Post_Data: state. Single_Post_Data.map((item) =>
+                item._id === id ? { ...item, ...updatedFields } : item
+            ),
+        }));
+    },
+
     Single_Post_Req: async (id)=>{
         try{
             const res = await axios.get( Single_Post_Api + id, {withCredentials:true} );
