@@ -16,6 +16,7 @@ const Post_Comment_Update_api= Base_url + "user/post/comment/update/"
 const Comment_Post_Api= Base_url + "user/post/comment/";
 const Save_Post_Api= Base_url + "user/post/save/";
 const Save_Post_list_Api= Base_url + "user/save/post";
+const Single_Post_Api= Base_url + "user/single/post/";
 
 
 const postStore  = create((set) => ({
@@ -220,6 +221,19 @@ const postStore  = create((set) => ({
             return false;
         }
     },
+
+    Single_Post_Data: null,
+    Single_Post_Req: async (id)=>{
+        try{
+            const res = await axios.get( Single_Post_Api + id, {withCredentials:true} );
+            set({Single_Post_Data :res.data})
+            return true
+        }
+        catch {
+            return false;
+        }
+    }
+
 
 }))
 

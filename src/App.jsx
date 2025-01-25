@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         path:"/notification",  element:<Layout> <NotificationList /> </Layout>
     },
     {
-        path:"/post-preview",  element:<Layout> <SinglePostPreview /> </Layout>
+        path:"/post-preview/:postId",  element:<Layout> <SinglePostPreview /> </Layout>
     }
 
 ])
