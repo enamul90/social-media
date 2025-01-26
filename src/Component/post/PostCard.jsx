@@ -116,12 +116,15 @@ const PostCard = () => {
     let like = Like - 1;
     let add = Like + 1;
 
-    if (res && isLike === true) {
-      update_my_post_data(id, { isLike: false, like: like });
+    if(res){
+      if (isLike === true) {
+        update_my_post_data(id, { isLike: false, likes: like });
+      }
+      if (isLike === false) {
+        update_my_post_data(id, { isLike: true, likes: add });
+      }
     }
-    if (res && isLike === false) {
-      update_my_post_data(id, { isLike: true, like: add });
-    }
+
   };
 
   const handleDelete = async () => {
@@ -388,7 +391,7 @@ const PostCard = () => {
               <div className="px-4 py-5 flex flex-row justify-s items-center gap-5">
                 <div
                   onClick={() =>
-                    likePostHandler(items._id, items.isLike, items.like)
+                    likePostHandler(items._id, items.isLike, items.likes)
                   }
                   className="flex flex-row gap-2 justify-start items-center"
                 >
@@ -409,7 +412,7 @@ const PostCard = () => {
                       items.isLike ? "text-sky-600" : "text-neutral-800"
                     } `}
                   >
-                    {items.like} Like
+                    {items.likes} Like
                   </h1>
                 </div>
                 <div

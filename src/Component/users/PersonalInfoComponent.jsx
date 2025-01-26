@@ -22,14 +22,31 @@ const PersonalInfoComponent = () => {
 
   const handleProfileUpdate = async () => {
     setLoading(true);
-    const reqData = {
-      username: myProfileData.username,
-      fullName: myProfileData.fullName,
-      email: myProfileData.email,
-      phoneNumber: myProfileData.phoneNumber,
-      bio: myProfileData.bio,
-      currentAddress: myProfileData.currentAddress,
-    };
+
+    let reqData = ""
+
+    if(myProfileData.username ===  profileData.username){
+       reqData = {
+        fullName: myProfileData.fullName,
+        email: myProfileData.email,
+        phoneNumber: myProfileData.phoneNumber,
+        bio: myProfileData.bio,
+        currentAddress: myProfileData.currentAddress,
+      };
+
+    }
+
+    else {
+       reqData = {
+        username: myProfileData.username,
+        fullName: myProfileData.fullName,
+        email: myProfileData.email,
+        phoneNumber: myProfileData.phoneNumber,
+        bio: myProfileData.bio,
+        currentAddress: myProfileData.currentAddress,
+      };
+    }
+
     const res = await updateProfileReq(reqData);
     setIsEditing(false);
     setLoading(false);
