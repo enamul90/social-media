@@ -1,5 +1,5 @@
 import {AiFillDelete, AiFillLike} from "react-icons/ai";
-import {FaCommentDots, FaImages, FaShare} from "react-icons/fa";
+import {FaCommentDots,  FaShare} from "react-icons/fa";
 import {IoBookmark, } from "react-icons/io5";
 import {MdEmojiEmotions, MdMoreVert} from "react-icons/md";
 import {RiEdit2Fill} from "react-icons/ri";
@@ -8,15 +8,18 @@ import {RiEdit2Fill} from "react-icons/ri";
 import {useEffect, useState} from "react";
 import postStore from "@/store/postStore.js";
 import {useParams} from "react-router-dom";
-
 import EmojiPicker from "emoji-picker-react";
+import toast from "react-hot-toast";
+
 
 const SinglePostPreview = () => {
     const postId = useParams();
 
-    const {likePostReq, update_Single_Post_data} =postStore()
 
-    const {Single_Post_Req , Single_Post_Data ,  commentListReq, commentList, savePostReq ,setCommentPostData , commentPostData} = postStore()
+    const {likePostReq, update_Single_Post_data} =postStore()
+    const {Single_Post_Req , Single_Post_Data ,  commentListReq, commentList, savePostReq , commentPostReq} = postStore()
+
+
     const [hovered, setHovered] = useState(
         {
             id: "",
@@ -24,9 +27,6 @@ const SinglePostPreview = () => {
         }
     );
 
-    console.log(commentPostData)
-
-    const [showPicker, setShowPicker] = useState(false);
 
     const [loader, setLoader] = useState({
         status : false,
@@ -37,6 +37,17 @@ const SinglePostPreview = () => {
         id: null
     });
 
+    const [commentListLoader, setCommentListLoader] = useState(false)
+
+    const [commentData, setCommentData] = useState("");
+    const [commentId, setCommentId] = useState("");
+    const [showPicker, setShowPicker] = useState(false);
+
+    const handleEmojiClick = (emojiData) => {
+        let newText = commentData + emojiData.emoji;
+        setCommentData(newText);
+        setShowPicker(false);
+    };
 
     useEffect(() => {
         (
@@ -47,18 +58,6 @@ const SinglePostPreview = () => {
             }
         )()
     }, [])
-
-
-    // const handleEmojiClick = (emojiData) => {
-    //     if(commentPostData.comment === undefined){
-    //         commentPostData.comment = ""
-    //     }
-    //
-    //     let newCommentPostData = commentPostData.comment + (emojiData.emoji)
-    //     setCommentPostData("comment", newCommentPostData);
-    //     setShowPicker(false);
-    // };
-
 
 
     const likePostHandler = async (id,isLike ,Like ) => {
@@ -94,16 +93,17 @@ const SinglePostPreview = () => {
                 id:id
             }
         )
+
         const res =  await savePostReq(id)
         if(res){
             let remove =  save-1
             let add =  save + 1
 
-            if (res && (isSave === true)) {
+            if (isSave === true) {
                 update_Single_Post_data(id, { isSave: false, postSave:remove})
 
             }
-            if (res && (isSave ===false)) {
+            if (isSave ===false) {
                 update_Single_Post_data(id, { isSave: true, postSave:add})
 
             }
@@ -117,6 +117,32 @@ const SinglePostPreview = () => {
         )
     }
 
+
+    const commentHandler = async (e) => {
+        e.preventDefault();
+
+        const data = {
+            id : Single_Post_Data[0]._id,
+            comment : commentData
+        }
+        setCommentListLoader(true)
+        const res =  await commentPostReq(data)
+        if(res){
+            setCommentData(" ")
+            setCommentListLoader(false)
+            await  commentListReq(postId.postId)
+        }
+        else {
+            toast.error("something went wrong")
+        }
+    }
+
+    const commentEdit = (id, text)=>{
+        alert(`${id} ${text}`);
+        setCommentData(text)
+        setCommentId(id)
+
+    }
 
 
 
@@ -203,9 +229,6 @@ const SinglePostPreview = () => {
     else {
         return (
             <>
-
-
-
                 <div className="w-full border-b-2 sticky top-0 bg-blur bg-white bg-opacity-20 z-[999999]">
                     <h1 className=" text-center text-xl font-medium text-neutral-700 py-4">Preview Post </h1>
                 </div>
@@ -216,10 +239,12 @@ const SinglePostPreview = () => {
                 >
                     {showPicker && (
                         <div className=" absolute top-0 right-0 z-30"
+                             onMouseLeave={() => setShowPicker(!showPicker)}
                         >
                             <EmojiPicker className="ms-auto" onEmojiClick={handleEmojiClick}/>
                         </div>
                     )}
+
                     <div className="flex flex-row ms-3 me-5 gap-3 justify-start items-center">
                         <div
                             className="flex-shrink-0 h-[40px] w-[40px] rounded-full overflow-hidden flex flex-row justify-center items-center shadow"
@@ -358,48 +383,60 @@ const SinglePostPreview = () => {
                                 </div>
 
 
-                                <div
-                                    className="cursor-pointer h-[40px] w-[40px] flex flex-col rounded-full
-                                hover:bg-sky-50 items-center justify-center relative
-                                "
-                                >
-                                    <MdMoreVert
-                                        onClick={
-                                            ()=>setHovered({
-                                                id: index,
-                                                status: true,
-                                            })
-                                        }
-                                        className="text-2xl text-neutral-600 hover:text-neutral-800 font-semibold "
-                                    />
+                                {/* Edit Comment And Delete Comment*/}
 
-                                    {
-                                        hovered.id === index && hovered.status === true  && (
-                                            <div
-                                                onMouseLeave={
-                                                    ()=>setHovered({
-                                                        id: " ",
-                                                        status: false,
+                                {
+                                    items.isComment && (
+                                        <div
+                                            className="cursor-pointer h-[40px] w-[40px] flex flex-col rounded-full
+                                                hover:bg-sky-50 items-center justify-center relative
+                                                  "
+                                        >
+                                            <MdMoreVert
+                                                onClick={
+                                                    () => setHovered({
+                                                        id: index,
+                                                        status: true,
                                                     })
                                                 }
-                                                className=" py-2  bg-white absolute top-0 right-0 shadow-md border rounded "
-                                            >
-                                                <div className="flex items-center gap-3 py-2 px-4 hover:bg-sky-100">
-                                                    <RiEdit2Fill
-                                                        className="text-lg font-semibold text-neutral-700 hover:text-neutral-800"/>
-                                                    <h1 className="text-base font-medium text-neutral-700 hover:text-neutral-800">Edit </h1>
-                                                </div>
-                                                <div className="flex items-center gap-3 py-2 px-4 hover:bg-sky-100">
-                                                    <AiFillDelete
-                                                        className="text-lg font-semibold text-neutral-700 hover:text-neutral-800"/>
-                                                    <h1 className="text-base font-medium text-neutral-700 hover:text-neutral-800">Delete </h1>
-                                                </div>
-                                            </div>
-                                        )
-                                    }
+                                                className="text-2xl text-neutral-600 hover:text-neutral-800 font-semibold "
+                                            />
 
-                                </div>
+                                            {
+                                                hovered.id === index && hovered.status === true && (
+                                                    <div
+                                                        onMouseLeave={
+                                                            () => setHovered({
+                                                                id: " ",
+                                                                status: false,
+                                                            })
+                                                        }
+                                                        className=" py-2  bg-white absolute top-0 right-0 shadow-md border rounded "
+                                                    >
+                                                        <div
+                                                            onClick={
+                                                                ()=> commentEdit(items._id, items.comment)
 
+                                                            }
+                                                            className="flex items-center gap-3 py-2 px-4 hover:bg-sky-100"
+                                                        >
+                                                            <RiEdit2Fill
+                                                                className="text-lg font-semibold text-neutral-700 hover:text-neutral-800"/>
+                                                            <h1 className="text-base font-medium text-neutral-700 hover:text-neutral-800">Edit </h1>
+                                                        </div>
+                                                        <div className="flex items-center gap-3 py-2 px-4 hover:bg-sky-100">
+                                                            <AiFillDelete
+                                                                className="text-lg font-semibold text-neutral-700 hover:text-neutral-800"/>
+                                                            <h1 className="text-base font-medium text-neutral-700 hover:text-neutral-800">Delete </h1>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+
+                                        </div>
+                                    )
+
+                                }
 
                             </div>
 
@@ -415,15 +452,12 @@ const SinglePostPreview = () => {
                         className="px-5 py-3
                     bg-white bg-opacity-80 bg-blur w-full
                     "
+                        onSubmit={commentHandler}
                     >
                         <input
-                            // value={commentPostData.comment}
-                            // onChange={(e) => setCommentPostData("comment",e.target.value)}
-                            onChange={
-                                ()=>{
-                                    alert(12)
-                                }
-                            }
+                            value={commentData}
+                            onChange={(e) =>setCommentData(e.target.value)}
+
                             className="text-base text-neutral-800 flex-grow bg-transparent w-full"
                             placeholder="Type Comment"
                         />
@@ -443,7 +477,10 @@ const SinglePostPreview = () => {
                                 hover:bg-sky-500 hover:text-sky-50
                             "
                             >
-                                Comment
+                                {
+                                    commentListLoader ? <div className="loader-dark my-1"></div> : "Comment"
+                                }
+
                             </button>
                         </div>
                     </form>

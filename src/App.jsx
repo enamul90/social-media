@@ -9,7 +9,7 @@ import NotificationList from "@/pages/NotificationList.jsx";
 import { Toaster } from "react-hot-toast";
 import NotFound from "./Component/NotFound/NotFound";
 import SinglePostPreview from "@/pages/SinglePostPreview"
-import AddPostPopup from "@/popup/AddPostPopup.jsx";
+import AddPostPopup from "@/pages/AddPostPage.jsx";
 
 const router = createBrowserRouter([
   {

@@ -126,7 +126,8 @@ const AddPost = () => {
 
 
                 <div
-                    className="w-full h-[300px] bg-gray-50 flex justify-center items-center overflow-hidden relative mt-4 rounded-lg shadow-md border-2 border-neutral-200">
+                    className="w-full h-[300px] bg-gray-50 flex justify-center items-center
+                    overflow-hidden relative mt-4 rounded-lg shadow border border-neutral-200">
 
                     {
                         image? (
