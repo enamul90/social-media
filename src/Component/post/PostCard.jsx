@@ -13,6 +13,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import VerifiedBadge from "../VerifyBadge/VerifyBadge";
 
 const PostCard = () => {
+  let hostname = window.location.origin;
   const { user } = useParams();
   const path = window.location.pathname;
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const PostCard = () => {
     id: null,
   });
 
-  const [DeletePostloader, setDeletePostLoader] = useState({
+  const [DeletePostLoader, setDeletePostLoader] = useState({
     status: false,
     id: null,
   });
@@ -148,8 +149,27 @@ const PostCard = () => {
     setPostToDelete(post);
     setIsModalOpen(true);
   };
+
   const toggleMenu = (id) => {
     setOpenMenuId((prevId) => (prevId === id ? null : id));
+  };
+
+  const handleShare = async (id) => {
+    const url = hostname + "/post/" + id
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'KAM_DEE',
+          text: 'Mr.CEO_and_Founder_Of_UVIOM .',
+          url: url ,
+        });
+
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+    } else {
+      alert('Sharing is not supported in this browser.');
+    }
   };
 
   const DeleteConfirmationModal = () => {
@@ -171,10 +191,10 @@ const PostCard = () => {
             </button>
             <button
               onClick={handleDelete}
-              disabled={DeletePostloader.status}
+              disabled={DeletePostLoader.status}
               className="px-6 py-2 bg-red-600 text-white rounded-lg transition duration-200 ease-in-out hover:bg-red-700 focus:outline-none"
             >
-              {DeletePostloader.status ? (
+              {DeletePostLoader.status ? (
                 <span className="animate-pulse">
                   <div className="loader"></div>
                 </span>
@@ -240,6 +260,7 @@ const PostCard = () => {
                     overflow-hidden flex flex-row justify-center items-center shadow"
                 >
                   <img
+                      className="min-h-full min-w-full"
                     onClick={() =>
                       goToProfile(items.myPost, items.user.username)
                     }
@@ -405,10 +426,15 @@ const PostCard = () => {
                   </h1>
                 </div>
 
-                <div className="flex flex-row gap-2 justify-start items-center">
+                <div
+                    onClick={
+                      ()=>handleShare(items._id)
+                    }
+                    className="flex flex-row gap-2 justify-start items-center"
+                >
                   <FaShare className="text-neutral-900 text-lg" />
                   <h1 className="text-base font-medium text-neutral-900 hidden md:block">
-                    {items.view} Share
+                    {/*{items.view} Share*/} Share
                   </h1>
                 </div>
 

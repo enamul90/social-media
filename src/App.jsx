@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import NotFound from "./Component/NotFound/NotFound";
 import SinglePostPreview from "@/pages/SinglePostPreview"
 import AddPostPopup from "@/pages/AddPostPage.jsx";
+import SettingPage from "@/pages/SettingPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,11 @@ const router = createBrowserRouter([
     element: <Layout>
       <AddPostPopup/>
     </Layout>
+  },
+
+  {
+    path: "/setting",
+    element: <SettingPage />
   },
 
   {
