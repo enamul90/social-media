@@ -11,6 +11,7 @@ import FollowingListComponent from "@/Component/users/FollowingListComponent.jsx
 import PersonalInfoComponent from "../Component/users/PersonalInfoComponent";
 import ImageGallery from "@/Component/users/ImageGallery.jsx";
 import SocialMediaComponent from "@/Component/users/SocialMediaComponent.jsx";
+import ChangePasswordComponent from "@/Component/users/ChangePasswordComponent.jsx";
 
 
 
@@ -56,6 +57,9 @@ const ProfilePage = () => {
                     <>
                         <PersonalInfoComponent />
                         <SocialMediaComponent />
+                        <ChangePasswordComponent />
+
+                        <div className="py-6"></div>
                     </>
                 )
             }
