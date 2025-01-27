@@ -1,156 +1,92 @@
 import { useState } from "react";
-import { FaFacebook,  FaLinkedin } from "react-icons/fa";
-import { TbBrandFiverr } from "react-icons/tb";
-import { FaGitAlt } from "react-icons/fa";
-import authorStore from "../../store/authorStore";
-
-
+import { FaFacebook, FaLinkedin, FaGithub } from "react-icons/fa";
 
 const SocialMediaComponent = () => {
+  const [links, setLinks] = useState({
+    facebook: "https://facebook.com/Enough2005",
+    linkedin: "",
+    fiver: "",
+    github: "https://github.com/sajib-bd",
+  });
 
-  const {myProfileData} = authorStore()
+  const [editing, setEditing] = useState(null);
 
-  const [isEditing, setIsEditing] = useState(false);
-
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setLinks((prevLinks) => ({ ...prevLinks, [name]: value }));
+  const handleInputChange = (platform, value) => {
+    setLinks((prev) => ({
+      ...prev,
+      [platform]: value,
+    }));
   };
 
-  const handleEditToggle = () => {
-    setIsEditing(!isEditing);
+  const toggleEdit = (platform) => {
+    setEditing((prev) => (prev === platform ? null : platform));
   };
+
+  const platforms = [
+    { name: "facebook", icon: <FaFacebook className="text-blue-600" /> },
+    { name: "linkedin", icon: <FaLinkedin className="text-blue-500" /> },
+    { name: "fiver", icon: <span className="text-green-500 font-semibold">F</span> },
+    { name: "github", icon: <FaGithub className="text-black" /> },
+  ];
 
   return (
-    <div className="p-5 " >
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4 text-center mt-5 ">
-        Social Media Links
-      </h2>
+      <div className="px-8">
+        <h2 className="text-xl mt-8 font-semibold mb-4 text-center">Manage Social Media Links</h2>
+        <div className="space-y-4 pt-2 ">
+          {platforms.map(({ name, icon }) => (
+              <div
+                  key={name}
+                  className="flex items-center gap-4 bg-gray-50 p-4 rounded-md shadow-sm border border-gray-300"
+              >
+                <div className="text-2xl">{icon}</div>
 
-      {/* Social Media Links */}
-      <div className="flex gap-6 justify-center mb-6">
-        <a
-          href={links.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 text-3xl hover:text-blue-800"
-        >
-          <FaFacebook />
-        </a>
+                {editing === name ? (
+                    <input
+                        type="text"
+                        value={links[name]}
+                        onChange={(e) => handleInputChange(name, e.target.value)}
+                        placeholder={`Add your ${name} link`}
+                        className="flex-grow bg-transparent outline-none text-sm placeholder-gray-400 border-b-2 border-gray-300 focus:border-blue-500"
+                    />
+                ) : (
+                    <span className="flex-grow text-sm text-gray-700">
+                {links[name] || `No link added for ${name}`}
+              </span>
+                )}
 
-        <a
-          href={links.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-700 text-3xl hover:text-blue-900"
-        >
-          <FaLinkedin />
-        </a>
-
-        <a
-          href={links.twitter}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-400 text-3xl hover:text-blue-600"
-        >
-          <TbBrandFiverr />
-        </a>
-        <a
-          href={links.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-pink-500 text-3xl hover:text-pink-700"
-        >
-          <FaGitAlt />
-        </a>
-        
-      </div>
-
-      {/* Edit Links */}
-      {isEditing && (
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Facebook URL:
-            </label>
-            <input
-              type="text"
-              name="facebook"
-              value={myProfileData.mediaLink["facebook"]}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md text-gray-700"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Linkedin URL:
-            </label>
-            <input
-              type="text"
-              name="linkedin"
-              value={myProfileData.mediaLink["linkedin"]}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md text-gray-700"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              fiver URL:
-            </label>
-            <input
-              type="text"
-              name="fiver"
-              value={myProfileData.mediaLink["fiver"]}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md text-gray-700"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              GitHub URL:
-            </label>
-            <input
-              type="text"
-              name="github"
-              value={myProfileData.mediaLink["github"]}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md text-gray-700"
-            />
-          </div>
+                {editing === name ? (
+                    <button
+                        onClick={() => toggleEdit(null)}
+                        className="px-3 py-1 text-sm rounded-md bg-green-500 text-white hover:bg-green-600"
+                    >
+                      Save
+                    </button>
+                ) : (
+                    <>
+                      <a
+                          href={links[name] || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`px-3 py-1 text-sm rounded-md ${
+                              links[name]
+                                  ? "bg-blue-500 text-white hover:bg-blue-600"
+                                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                          }`}
+                      >
+                        Visit
+                      </a>
+                      <button
+                          onClick={() => toggleEdit(name)}
+                          className="px-3 py-1 text-sm rounded-md bg-yellow-500 text-white hover:bg-yellow-600"
+                      >
+                        Edit
+                      </button>
+                    </>
+                )}
+              </div>
+          ))}
         </div>
-      )}
-
-      {/* Buttons */}
-      <div className="mt-6 flex justify-center gap-4">
-        {isEditing ? (
-          <>
-            <button
-              onClick={handleEditToggle}
-              className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-            >
-              Save
-            </button>
-            <button
-              onClick={() => setIsEditing(false)}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={handleEditToggle}
-            className="px-4 py-2  text-blue-500 rounded-md font-medium text-lg"
-          >
-            Edit Links
-          </button>
-        )}
       </div>
-    </div>
   );
 };
 

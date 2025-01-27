@@ -366,12 +366,12 @@ const PostCard = () => {
                   </>
                 )}
               </div>
-              <h4 className=" px-3 mb-2  text-base font-medium text-neutral-700">
+              <h4 className=" px-3 mb-2    text-base font-medium text-neutral-700">
                 {items.images !== null && items.caption !== "" && (
                     <DynamicText
                         text={items.caption}
                         Length={110}
-                        TestStyle={"text-lg"}
+                        TestStyle={"text-lg font-normal text-neutral-700 leading-[120%]"}
                     />
                 )}
               </h4>

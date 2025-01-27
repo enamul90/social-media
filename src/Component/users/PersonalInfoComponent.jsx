@@ -31,7 +31,7 @@ const PersonalInfoComponent = () => {
         email: myProfileData.email,
         phoneNumber: myProfileData.phoneNumber,
         bio: myProfileData.bio,
-        currentAddress: myProfileData.currentAddress,
+         location: myProfileData.location,
       };
 
     }
@@ -43,7 +43,7 @@ const PersonalInfoComponent = () => {
         email: myProfileData.email,
         phoneNumber: myProfileData.phoneNumber,
         bio: myProfileData.bio,
-        currentAddress: myProfileData.currentAddress,
+        location: myProfileData.location,
       };
     }
 
@@ -85,9 +85,9 @@ const PersonalInfoComponent = () => {
     );
   } else {
     return (
-      <div className="bg-gray-100 py-8 px-4">
+      <div className=" pb-3 ">
         {/* Personal Info Form */}
-        <div className="bg-white shadow-lg rounded-xl p-8 max-w-3xl mx-auto">
+        <div className="bg-white border-b p-8 max-w-3xl mx-auto">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             Personal Information
           </h2>
@@ -203,17 +203,17 @@ const PersonalInfoComponent = () => {
                 <input
                   type="text"
                   name="address"
-                  value={myProfileData.currentAddress}
+                  value={myProfileData.location}
                   onChange={(e) =>
-                    updateProfileData("currentAddress", e.target.value)
+                    updateProfileData("location", e.target.value)
                   }
                   className="w-2/3 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-sky-500 focus:outline-none transition"
                 />
               ) : (
                 <p className="w-2/3 text-gray-600">
                   {myUser === user
-                    ? myProfileData?.currentAddress
-                    : profileData?.currentAddress}
+                    ? myProfileData?.location
+                    : profileData?.location}
                 </p>
               )}
             </div>
