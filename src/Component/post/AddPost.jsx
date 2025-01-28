@@ -133,7 +133,7 @@ const AddPost = () => {
               duration: 0.3,
               scale: {type: "spring", visualDuration: 0.3, bounce: 0.5},
             }}
-            className="max-w-[560px] mx-auto mt-5 rounded-lg shadow-lg border border-neutral-200 bg-white p-6"
+            className="max-w-[560px] mx-auto mt-5 rounded-lg shadow-sm lg:shadow-lg border border-neutral-200 bg-white p-4 lg:p-6 "
         >
           {showPicker && (
               <div className="absolute top-0 right-0 z-30">
@@ -149,7 +149,7 @@ const AddPost = () => {
                   <img
                       src={myProfileData.profile}
                       alt="profile"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover flex-shrink-0"
                   />
               )}
             </div>
@@ -208,7 +208,9 @@ const AddPost = () => {
             ) : (
                 <button
                     onClick={createPost}
-                    className="px-4 py-2 rounded-full border-2 border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white transition duration-300"
+                    className="px-3 lg:px-4 py-1 lg:py-2 rounded-full border-2 border-sky-500
+                    text-sky-500 hover:bg-sky-500 hover:text-white transition duration-300
+                    "
                 >
                   Post
                 </button>

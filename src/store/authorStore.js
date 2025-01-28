@@ -61,8 +61,8 @@ const authorStore = create((set) => ({
             await axios.post(Login_api, data , {withCredentials: true})
             return true
         }
-        catch{
-            return false
+        catch(err){
+            return err
         }
     },
 

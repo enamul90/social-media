@@ -2,15 +2,18 @@ import { motion } from "framer-motion";
 import { TiHome } from "react-icons/ti";
 import { FaSearch, FaUser } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
-import { RiMessage3Fill } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {BsBookmarkFill, BsPlusSquareFill} from "react-icons/bs";
+
 
 const BottomMenu = () => {
+    const {user} = useParams()
     const navigate = useNavigate();
     let userName = localStorage.getItem('userName');
+    const pathname = window.location.pathname;
 
     return (
-        <div className="py-3 w-screen bg-white flex flex-row justify-between">
+        <div className="py-3 w-screen shadow-lg border-t bg-white flex flex-row justify-between items-center">
             {/* Home Icon */}
             <motion.div
                 whileHover={{ opacity: 1, scale: 1.1 }}
@@ -20,55 +23,86 @@ const BottomMenu = () => {
                     duration: 0.3,
                     scale: { type: "spring", visualDuration: 0.3, bounce: 0.5 },
                 }}
-                className="menu-active mb-3 flex-shrink-0"
+                className={pathname ==="/"? "menu-active text-sky-500 mb-3 text-3xl flex-shrink-0" : "menu mb-3 text-2xl "}
                 onClick={() => navigate("/")}
             >
-                <TiHome className="text-2xl font-medium" />
-                <h3 className="text-xl font-medium">Home</h3>
+                <TiHome className=" font-medium" />
             </motion.div>
 
             {/* Search Icon */}
             <motion.div
-                whileHover={{ opacity: 1, scale: 1.1 }}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{opacity: 1, scale: 1.1}}
+                initial={{opacity: 0, scale: 0}}
+                animate={{opacity: 1, scale: 1}}
                 transition={{
                     duration: 0.3,
-                    scale: { type: "spring", visualDuration: 0.3, bounce: 0.5 },
+                    scale: {type: "spring", visualDuration: 0.3, bounce: 0.5},
                 }}
-                className="menu mb-3"
+                className={pathname ==="/search"? "menu-active text-sky-500 mb-3 text-3xl flex-shrink-0" : "menu mb-3 text-2xl "}
                 onClick={() => navigate("/search")} // Navigate to search on click
             >
-                <FaSearch className="text-2xl font-medium" />
+                <FaSearch className=" font-medium"/>
+
             </motion.div>
 
             <motion.div
-                whileHover={{ opacity: 1, scale: 1.1 }}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{opacity: 1, scale: 1.1}}
+                initial={{opacity: 0, scale: 0}}
+                animate={{opacity: 1, scale: 1}}
                 transition={{
                     duration: 0.3,
-                    scale: { type: "spring", visualDuration: 0.3, bounce: 0.5 },
+                    scale: {type: "spring", visualDuration: 0.3, bounce: 0.5},
                 }}
-                className="menu mb-3"
+                className={pathname ==="/notification"? "menu-active text-sky-500 mb-3 text-3xl flex-shrink-0" : "menu mb-3 text-2xl "}
                 onClick={() => navigate("/notification")}
             >
-                <IoMdNotifications className="text-2xl font-medium" />
+                <IoMdNotifications className=" font-medium"/>
+
             </motion.div>
 
             {/* Messages Icon */}
+            {/*<motion.div*/}
+            {/*    whileHover={{opacity: 1, scale: 1.1}}*/}
+            {/*    initial={{opacity: 0, scale: 0}}*/}
+            {/*    animate={{ opacity: 1, scale: 1 }}*/}
+            {/*    transition={{*/}
+            {/*        duration: 0.3,*/}
+            {/*        scale: { type: "spring", visualDuration: 0.3, bounce: 0.5 },*/}
+            {/*    }}*/}
+            {/*    className={pathname ==="/messages"? "menu-active text-sky-500 mb-3 text-3xl flex-shrink-0" : "menu mb-3 text-2xl "}*/}
+            {/*    onClick={() => navigate("/messages")}*/}
+            {/*>*/}
+            {/*    <BsBookmarkFill className="font-medium" />*/}
+            {/*</motion.div>*/}
+
+            {/* Save Post Icon */}
             <motion.div
                 whileHover={{ opacity: 1, scale: 1.1 }}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
                     duration: 0.3,
-                    scale: { type: "spring", visualDuration: 0.3, bounce: 0.5 },
+                    scale: { type: "spring", bounce: 0.5 },
                 }}
-                className="menu mb-3"
-                onClick={() => navigate("/messages")}
+                className={pathname ==="/save-post"? "menu-active text-sky-500 mb-3 text-2xl flex-shrink-0" : "menu mb-3 text-xl "}
+                onClick={() => navigate("/save-post")}
             >
-                <RiMessage3Fill className="text-2xl font-medium" />
+                <BsBookmarkFill className="font-medium" />
+            </motion.div>
+
+            {/* Add Post Icon */}
+            <motion.div
+                whileHover={{ opacity: 1, scale: 1.1 }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                    duration: 0.3,
+                    scale: { type: "spring", bounce: 0.5 },
+                }}
+                className={pathname ==="/add-post"? "menu-active text-sky-500 mb-3 text-2xl flex-shrink-0" : "menu mb-3 text-xl "}
+                onClick={() => navigate("/add-post")}
+            >
+                <BsPlusSquareFill className="font-medium" />
             </motion.div>
 
             {/* Profile Icon */}
@@ -80,10 +114,10 @@ const BottomMenu = () => {
                     duration: 0.3,
                     scale: { type: "spring", visualDuration: 0.3, bounce: 0.5 },
                 }}
-                className="menu mb-3"
+                className={user ===userName? "menu-active text-sky-500 mb-3 text-3xl flex-shrink-0" : "menu mb-3 text-2xl "}
                 onClick={() => navigate(`profile/${userName}`)} 
             >
-                <FaUser className="text-2xl font-medium" />
+                <FaUser className=" font-medium" />
             </motion.div>
         </div>
     );

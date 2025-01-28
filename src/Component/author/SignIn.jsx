@@ -40,11 +40,14 @@ const SignIn = () => {
         const res = await loginReq(loginForm);
         setLoading(false);
 
+        console.log(res);
+
         if (res) {
             toast.success("Login successfully");
             navigate("/");
-        } else {
-            toast.error("Login error");
+        }
+        else {
+            console.log(res);
         }
     };
 
@@ -54,7 +57,7 @@ const SignIn = () => {
         <div className="flex items-center justify-center lg:min-h-screen">
             <div className="w-full max-w-[650px] bg-white rounded-lg shadow-sm p-8">
                 {/* Title */}
-                <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
+                <h2 className="text-2xl lg:text-3xl font-extrabold text-center text-gray-800 mb-6">
                     Sign In
                 </h2>
 

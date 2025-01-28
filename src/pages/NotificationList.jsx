@@ -176,27 +176,55 @@ const NotificationList = () => {
                 onClick={() => {
                   handleNotificationClick(notification);
                 }}
-                className={`flex items-center p-4 border-b last:border-b-0 ${
+                className={`flex flex-col  lg:flex-row lg:items-center justify-start p-4 border-b last:border-b-0 ${
                   notification.isRead ? "bg-white" : "bg-blue-100"
                 } ${notification.isRead ? "hover:bg-green-50" : ""} mb-2 -z-30`}
               >
-                <img
-                  src={notification.user.profile}
-                  alt={notification.user.username}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div className="ml-4 flex-1 ">
-                  <div className="flex text-lg font-medium text-gray-800 items-center gap-1">
+
+                <div className="flex justify-start items-center gap-2">
+                  <img
+                      src={notification.user.profile}
+                      alt={notification.user.username}
+                      className="w-12 h-12 rounded-full object-cover"
+                  />
+
+                  <div className="flex flex-col lg:hidden">
+                    <div className="flex text-lg font-medium text-gray-800 items-center gap-1">
+                      {notification.user.fullName}{" "}
+                      {notification.user.verify && (
+                          <MdVerified className="text-blue-500"/>
+                      )}
+                    </div>
+                    <div className=" flex items-center gap-3 ">
+                      <h1 className="text-xs text-gray-400">
+                        {notification.time}
+                      </h1>
+                      <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleDropdown(notification._id);
+                          }}
+                          className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                      >
+                        <FaEllipsisH className="w-5 h-5"/>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div className="ml-4 flex-1  ">
+                  <div className="hidden lg:flex text-lg font-medium text-gray-800 items-center gap-1 ">
                     {notification.user.fullName}{" "}
                     {notification.user.verify && (
-                      <MdVerified className="text-blue-500" />
+                        <MdVerified className="text-blue-500"/>
                     )}
                   </div>
-                  <div className="text-sm text-gray-600">
+                  <div className="mt-2 lg:mt-0 text-sm text-gray-600">
                     {renderNotificationMessage(notification)}
                   </div>
                 </div>
-                <div className="text-xs text-gray-400">{notification.time}</div>
+                <div className="text-xs hidden lg:inline-block text-gray-400">{notification.time}</div>
 
                 <div className="relative ml-4">
                   <button
@@ -204,7 +232,7 @@ const NotificationList = () => {
                       e.stopPropagation();
                       toggleDropdown(notification._id);
                     }}
-                    className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                    className=" hidden lg:inline-block  text-gray-500 hover:text-gray-700 focus:outline-none"
                   >
                     <FaEllipsisH className="w-5 h-5" />
                   </button>
