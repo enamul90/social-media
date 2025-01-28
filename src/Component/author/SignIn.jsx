@@ -40,14 +40,13 @@ const SignIn = () => {
         const res = await loginReq(loginForm);
         setLoading(false);
 
-        console.log(res);
 
-        if (res) {
+        if (res === 200) {
             toast.success("Login successfully");
             navigate("/");
         }
         else {
-            console.log(res);
+           toast.error(res.response.data.message);
         }
     };
 

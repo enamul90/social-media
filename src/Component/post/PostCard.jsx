@@ -432,9 +432,9 @@ const PostCard = () => {
                     <div className="max-w-full max-h-full overflow-y-auto scroll-bar-hidden p-5">
                       <DynamicText
                         text={items.caption}
-                        Length={280}
+                        Length={270}
                         Align={"flex flex-col "}
-                        TestStyle={"text-2xl font-semibold"}
+                        TestStyle={"text-xl lg:text-2xl font-medium lg:font-semibold"}
 
                       />
                     </div>
