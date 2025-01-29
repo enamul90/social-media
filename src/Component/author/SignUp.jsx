@@ -15,7 +15,7 @@ const SignUp = () => {
         const res = await signUpReq(signUpFrom);
         setLoading(false);
 
-        if (res === 200) {
+        if (res === 201) {
             toast.success("Your account successfully created!");
             setAuthor("signIn");
         } else {
