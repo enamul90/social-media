@@ -14,7 +14,6 @@ import VerifiedBadge from "../utility/VerifyBadge.jsx";
 
 const UserInfo = () => {
   const [loader, setLoader] = useState(false);
-  const navigate = useNavigate();
   const { user } = useParams();
   let myUser = localStorage.getItem("userName");
   const { profileData, flowReq, readProfileReq } = authorStore();
@@ -22,8 +21,7 @@ const UserInfo = () => {
     uiManage();
 
   const openNewWindow = (url) => {
-    let  newUrl = "https://" + url;
-    window.open(newUrl, "_blank", "noopener,noreferrer");
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   if (profileData === null || profileData === undefined) {

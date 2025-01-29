@@ -8,8 +8,6 @@ import UpdateProfilePopup from "../popup/UpdateProfilePopup.jsx";
 import uiManage from "../store/uiManage.js";
 
 
-
-
 const Layout = (props) => {
 
     const {updatePostData ,commentPostData } = postStore()

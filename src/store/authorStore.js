@@ -36,11 +36,11 @@ const authorStore = create((set) => ({
     signUpReq : async (data)=>{
 
         try {
-            await  axios.post(Sign_up_api, data )
-            return true
+            const res =   await  axios.post(Sign_up_api, data )
+            return res.status
         }
-        catch {
-            return false
+        catch (error) {
+            return error;
         }
 
     },

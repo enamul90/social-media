@@ -15,11 +15,11 @@ const SignUp = () => {
         const res = await signUpReq(signUpFrom);
         setLoading(false);
 
-        if (res) {
+        if (res === 200) {
             toast.success("Your account successfully created!");
             setAuthor("signIn");
         } else {
-            toast.error("Something went wrong");
+            toast.error(res.response.data.message);
         }
     };
 

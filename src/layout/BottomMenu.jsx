@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { TiHome } from "react-icons/ti";
 import { FaSearch, FaUser } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { BsBookmarkFill, BsPlusSquareFill } from "react-icons/bs";
 import NotificationBadge from "@/Component/utility/NotificationBadge";
 import authorStore from "@/store/authorStore.js";
@@ -11,7 +11,7 @@ const BottomMenu = () => {
   const { user } = useParams();
   const navigate = useNavigate();
   let userName = localStorage.getItem('userName');
-  const pathname = useLocation;
+  const pathname = window.location.pathname
   const { myProfileData } = authorStore()
 
   return (
@@ -103,7 +103,7 @@ const BottomMenu = () => {
           scale: { type: "spring", visualDuration: 0.3, bounce: 0.5 },
         }}
         className={user === userName ? "menu-active text-sky-500 mb-3 text-3xl flex-shrink-0" : "menu mb-3 text-2xl"}
-        onClick={() => navigate(`profile/${userName}`)}
+        onClick={() => navigate(`/profile/${userName}`)}
       >
         <FaUser className="font-medium" />
       </motion.div>
