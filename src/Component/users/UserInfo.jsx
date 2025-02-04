@@ -82,8 +82,8 @@ const UserInfo = () => {
 
   else {
     return (
-      <div className=" rounded  border border-gray-200 mb-6">
-        <div className="h-[200px] w-full overflow-hidden flex flex-row justify-between items-center shadow ">
+      <div className=" rounded  border border-gray-200 mb-6 ">
+        <div className="h-[200px] w-full overflow-hidden flex flex-row justify-between items-center shadow  ">
           <img
             src={profileData.cover}
             alt="Cover Photo"
@@ -103,7 +103,7 @@ const UserInfo = () => {
           />
         </div>
 
-        <div className="mx-[25px] pb-3 mt-3 relative">
+        <div className="mx-3 lg:mx-[25px] pb-3 mt-3 relative">
           <h1 className="text-2xl font-medium text-neutral-700 flex items-center gap-1">
             {profileData.fullName}
             {profileData.verify && (
