@@ -65,6 +65,7 @@ const router = createBrowserRouter([
     path: "/story",
     element: <StoryPage />
   },
+
   {
     path: "*",
     element: <NotFound />,
