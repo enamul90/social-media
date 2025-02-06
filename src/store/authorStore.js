@@ -148,7 +148,6 @@ const authorStore = create((set) => ({
             let res =  await axios.get(Read_Profile_api +user,  {withCredentials: true})
             set({profileData: res.data.profile[0]})
 
-
             let me =  await axios.get(Read_Profile_api +"me",  {withCredentials: true})
             set({myProfileData: me.data.profile[0]})
             localStorage.setItem('userName', me.data.profile[0].username);
