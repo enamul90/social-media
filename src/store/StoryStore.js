@@ -1,7 +1,7 @@
 import {create} from "zustand";
 import axios from "axios";
 
-const Base_url = "https://matrix-media.up.railway.app/api/v1/"
+const Base_url = "https://matrix-social-media-backend.onrender.com/api/v1/"
 const Story_Api= Base_url + "user/story/read";
 const Create_Story_Api = Base_url + "user/story/create";
 

@@ -32,7 +32,7 @@ const Menu = () => {
             label: "Notification",
             route: "/notification",
         },
-        { icon: <RiMessage3Fill className="text-2xl" />, label: "Messages", route: { pathname } },
+        { icon: <RiMessage3Fill className="text-2xl" />, label: "Messages", route: "/massages" },
         { icon: <FaBookmark className="text-2xl" />, label: "Saved Posts", route: "/save-post" },
         { icon: <RiStickyNoteAddFill className="text-2xl" />, label: "Add Post", route: "/add-post" },
         { icon: <FaUser className="text-2xl" />, label: "Profile", route: `/profile/${userName}` },
@@ -76,7 +76,8 @@ const Menu = () => {
             {/* Settings */}
             <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer hover:bg-gray-100"
+                className={`flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer ${pathname === "/setting" ? "bg-blue-100 text-blue-500" : "hover:bg-gray-100"
+                }`}
                 onClick={() => navigate("/setting")}
             >
                 <IoSettingsSharp className="text-2xl text-gray-600" />

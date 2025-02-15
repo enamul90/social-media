@@ -93,7 +93,7 @@ const ProfileSummaryComponent = () => {
 
                     <div className="mx-[15px] pb-3 flex justify-between">
                       <button
-                          onClick={() => navigate("/profile/me")}
+                          onClick={() => goToProfile(myProfileData.username)}
                           className="px-3 py-2 text-sm font-medium bg-blue-500 text-white rounded-md hover:bg-blue-600"
                       >
                         View Profile

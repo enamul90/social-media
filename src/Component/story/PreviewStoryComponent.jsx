@@ -3,6 +3,7 @@ import {IoMdClose} from "react-icons/io";
 import {useEffect, useState} from "react";
 import {FaAngleLeft, FaChevronRight} from "react-icons/fa";
 import StoryStore from "@/store/StoryStore.js";
+import {CiMenuKebab} from "react-icons/ci";
 
 
 const PreviewStoryComponent = () => {
@@ -47,6 +48,18 @@ const PreviewStoryComponent = () => {
         )
     }
 
+    const EditStoryView = ()=>{
+        return (
+            <div>
+                <CiMenuKebab className="text-white font-semibold text-xl" />
+
+                <div>
+                    
+                </div>
+            </div>
+        )
+    }
+
     const StoryActiveCard = ({ story, id }) => {
         return (
             <>
@@ -71,24 +84,37 @@ const PreviewStoryComponent = () => {
                                             {/* Overlay */}
                                             <div className="absolute inset-0 bg-black bg-opacity-20"></div>
 
-
-                                            <div className="flex items-center gap-3 absolute top-2 left-2">
+                                            <div className="absolute top-0 left-0 p-3 flex items-center justify-between w-full">
                                                 {/* Profile Picture */}
-                                                <div
-                                                    className=" w-10 h-10 border-2 border-blue-500 rounded-full overflow-hidden">
-                                                    <img
-                                                        src={story.user.profile}
-                                                        alt="Profile"
-                                                        className="w-full h-full object-cover"
-                                                    />
+                                                <div className="flex items-center gap-3">
+                                                    <div
+                                                        className=" w-10 h-10 border-2 border-blue-500 rounded-full overflow-hidden">
+                                                        <img
+                                                            src={story.user.profile}
+                                                            alt="Profile"
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+
+                                                    {/* User Name */}
+                                                    <p className="text-white text-base font-medium">
+                                                        {story.user.fullName}
+                                                    </p>
                                                 </div>
 
-                                                {/* User Name */}
-                                                <p className="text-white text-base font-medium">
-                                                    {story.user.fullName}
-                                                </p>
+                                                {/* Post Create Time & edit option */}
+                                                <div className="flex justify-end items-center gap-3">
+                                                    <p className="text-white text-sm font-normal">
+                                                        {story.time}
+                                                    </p>
+                                                    <EditStoryView/>
+                                                </div>
                                             </div>
-                                               <h1 className=" text-center text-lg absolute bottom-5 text-white font-medium w-full">{story.text}</h1>
+
+
+                                            <h1 className=" text-center text-lg absolute bottom-5 text-white font-medium w-full">
+                                                {story.text}
+                                            </h1>
                                         </div>
 
                                     )
@@ -100,7 +126,6 @@ const PreviewStoryComponent = () => {
             </>
         );
     };
-
     const StoryCard = ({story, id}) => {
         return (
             <>
@@ -114,7 +139,7 @@ const PreviewStoryComponent = () => {
                                             onClick={()=>setScrollCount(index - 2)}
                                             key={index}
                                             className="relative  rounded-lg overflow-hidden cursor-pointer border border-sky-50 shadow-xl
-                                        h-full
+                                            h-full
                                         "
                                         >
                                             {/* Background Image */}
@@ -190,7 +215,6 @@ const PreviewStoryComponent = () => {
             </div>
         )
     }
-
     const handleScroll = (direction) => {
         if (direction === "add") {
             setScrollMaxCount(StoryData.length - 3)
@@ -230,32 +254,32 @@ const PreviewStoryComponent = () => {
             <div className="container h-screen mx-auto flex flex-row items-center relative ">
                 <Header/>
                 <div className="grid grid-cols-6 mx-auto h-full gap-8 py-6  max-w-[1400px] max-h-[750px] ">
-                    <div className="col-span-1 py-36 opacity-25">
+                    <div className="col-span-1 py-36 opacity-25 cursor-pointer">
                         <StoryCard
                             story={StoryData}
                             id={scrollCount}
                         />
                     </div>
-                    <div className="col-span-1 py-36 opacity-65">
+                    <div className="col-span-1 py-36 opacity-65 cursor-pointer">
                         <StoryCard
                             story={StoryData}
                             id={1 + scrollCount}
                         />
                     </div>
-                    <div className="col-span-2 relative">
+                    <div className="col-span-2 relative cursor-pointer">
                         <ScrollHandleButton/>
                         <StoryActiveCard
                             story={StoryData}
                             id={2 + scrollCount}
                         />
                     </div>
-                    <div className="col-span-1 py-36 opacity-65">
+                    <div className="col-span-1 py-36 opacity-65 cursor-pointer">
                         <StoryCard
                             story={StoryData}
                             id={3 + scrollCount}
                         />
                     </div>
-                    <div className="col-span-1 py-36 opacity-25">
+                    <div className="col-span-1 py-36 opacity-25 cursor-pointer">
                         <StoryCard
                             story={StoryData}
                             id={4 + scrollCount}

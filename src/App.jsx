@@ -13,6 +13,7 @@ import AddPostPopup from "@/pages/AddPostPage.jsx";
 import SettingPage from "@/pages/SettingPage.jsx";
 import StoryPage from "@/pages/StoryPage.jsx";
 import 'animate.css';
+import MassagePage from "@/pages/MassagePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
         <NotificationList />
       </Layout>
     ),
+  },
+  {
+    path: "/massages",
+    element: <MassagePage />,
   },
   {
     path: "/post/:postId",
