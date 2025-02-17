@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {IoMdClose} from "react-icons/io";
 import {useEffect, useState} from "react";
-import {FaAngleLeft, FaChevronRight, FaPlay} from "react-icons/fa";
+import {FaAngleLeft, FaChevronRight,} from "react-icons/fa";
 import StoryStore from "@/store/StoryStore.js";
 import {CiMenuKebab} from "react-icons/ci";
 
@@ -29,17 +29,8 @@ const PreviewStoryComponent = () => {
             }
         )()
     },[])
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setPreviewControl((previewControl) => {
-                if (previewControl < previewMax ) return previewControl + 1;
-                else  return 0;
 
-            });
-        }, 2000);
 
-        return () => clearInterval(intervalId);
-    }, []);
 
     const Header = ()=>{
         return (
