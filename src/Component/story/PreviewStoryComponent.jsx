@@ -1,17 +1,21 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {IoMdClose} from "react-icons/io";
 import {useEffect, useState} from "react";
-import {FaAngleLeft, FaChevronRight} from "react-icons/fa";
+import {FaAngleLeft, FaChevronRight, FaPlay} from "react-icons/fa";
 import StoryStore from "@/store/StoryStore.js";
 import {CiMenuKebab} from "react-icons/ci";
 
 
 const PreviewStoryComponent = () => {
     const navigate = useNavigate();
+
     const [scrollCount , setScrollCount] = useState(0);
     const [scrollMaxCount , setScrollMaxCount] = useState(1);
-    const { StoryData , StoryReq,  clearStoreData} = StoryStore()
+    const [previewControl, setPreviewControl] = useState(0);
+    const [previewMax, setPreviewMax] = useState(0);
 
+
+    const { StoryData , StoryReq,  clearStoreData} = StoryStore()
     const {id} = useParams();
     const myId = parseInt(id)
 
@@ -25,8 +29,17 @@ const PreviewStoryComponent = () => {
             }
         )()
     },[])
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setPreviewControl((previewControl) => {
+                if (previewControl < previewMax ) return previewControl + 1;
+                else  return 0;
 
+            });
+        }, 2000);
 
+        return () => clearInterval(intervalId);
+    }, []);
 
     const Header = ()=>{
         return (
@@ -47,7 +60,6 @@ const PreviewStoryComponent = () => {
             </div>
         )
     }
-
     const EditStoryView = ()=>{
         return (
             <div>
@@ -59,38 +71,37 @@ const PreviewStoryComponent = () => {
             </div>
         )
     }
-
     const StoryActiveCard = ({ story, id }) => {
         return (
             <>
                 {
                     story.map((story, index) => {
+
+
                         return (
                             <>
                                 {
                                     index === id && (
                                         <div
                                             key={index}
-                                            className="relative  rounded-xl overflow-hidden cursor-pointer border border-sky-100
-                                                  h-full shadow-2xl "
+                                            className="relative   rounded-xl overflow-hidden border border-sky-100
+                                              h-full shadow-2xl "
                                         >
                                             {/* Background Image */}
-                                            <img
-                                                src={story.image}
-                                                alt="Story"
-                                                className="w-full h-full object-cover"
-                                            />
 
-                                            {/* Overlay */}
-                                            <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                                            <ActiveBG data={story.stories} />
 
-                                            <div className="absolute top-0 left-0 p-3 flex items-center justify-between w-full">
+
+                                            <div className="absolute inset-0  bg-opacity-30"></div>
+
+                                            <div
+                                                className="absolute top-0 left-0 p-3 flex items-center justify-between w-full">
                                                 {/* Profile Picture */}
                                                 <div className="flex items-center gap-3">
                                                     <div
                                                         className=" w-10 h-10 border-2 border-blue-500 rounded-full overflow-hidden">
                                                         <img
-                                                            src={story.user.profile}
+                                                            src={story.profile}
                                                             alt="Profile"
                                                             className="w-full h-full object-cover"
                                                         />
@@ -98,7 +109,7 @@ const PreviewStoryComponent = () => {
 
                                                     {/* User Name */}
                                                     <p className="text-white text-base font-medium">
-                                                        {story.user.fullName}
+                                                        {story.fullName}
                                                     </p>
                                                 </div>
 
@@ -111,6 +122,7 @@ const PreviewStoryComponent = () => {
                                                 </div>
                                             </div>
 
+                                            <ActiveIndicator data={story.stories} />
 
                                             <h1 className=" text-center text-lg absolute bottom-5 text-white font-medium w-full">
                                                 {story.text}
@@ -126,28 +138,83 @@ const PreviewStoryComponent = () => {
             </>
         );
     };
-    const StoryCard = ({story, id}) => {
-        return (
+    const ActiveBG = ({data})=>{
+
+        useEffect(() => {
+            setPreviewMax(data.length -1)
+        }, [data]);
+
+        return(
             <>
                 {
+                    data.map((item, index) => {
+                        return(
+                            <div className="absolute top-0 left-0 h-full"   key={index}>
+                                {
+                                    index === previewControl && (
+                                        <img
+                                            src={(item.image)}
+                                            alt="Story"
+                                            className="w-full h-full object-cover"
+                                        />
+                                    )
+                                }
+
+                            </div>
+                        )
+                    })
+                }
+            </>
+        )
+    }
+    const ActiveIndicator = ({data})=>{
+       return(
+           <div className="px-4 absolute top-16 left-0 flex gap-2  w-full">
+               {
+                   data.map((item, index) => {
+                       return(
+                           <>
+                               {
+                                   index === previewControl &&  <div className="h-[4px] w-[50px] bg-sky-500 rounded-full" key={index}></div>
+                               }
+                               {
+                                   index !== previewControl &&  <div onClick={()=>setPreviewControl(index)} className="h-[4px] w-[30px] bg-gray-200 rounded-full" key={index}></div>
+                               }
+                           </>
+
+                       )
+                   })
+               }
+
+           </div>
+       )
+    }
+    const StoryCard = ({story, id}) => {
+
+        return (
+            <>
+            {
                     story.map((story, index) => {
+
                         return (
                             <>
                                 {
                                     index === id && (
                                         <div
-                                            onClick={()=>setScrollCount(index - 2)}
+                                            onClick={() => setScrollCount(index - 2)}
                                             key={index}
                                             className="relative  rounded-lg overflow-hidden cursor-pointer border border-sky-50 shadow-xl
                                             h-full
                                         "
                                         >
                                             {/* Background Image */}
+
                                             <img
-                                                src={story.image}
+                                                src={(story.stories[0].image)}
                                                 alt="Story"
                                                 className="w-full h-full object-cover"
                                             />
+
 
                                             {/* Overlay */}
                                             <div className="absolute inset-0 bg-black bg-opacity-30"></div>
@@ -160,16 +227,16 @@ const PreviewStoryComponent = () => {
                                                 <div
                                                     className=" w-16 h-16 border-2 border-blue-500 rounded-full overflow-hidden">
                                                     <img
-                                                        src={story.user.profile}
+                                                        src={story.profile}
                                                         alt="Profile"
                                                         className="w-full h-full object-cover"
                                                     />
                                                 </div>
 
                                                 {/* User Name */}
-                                                <p className="mt-2 text-white text-lg font-medium text-center">
-                                                    {story.user.fullName}
-                                                </p>
+                                                {/*<p className="mt-2 text-white text-lg font-medium text-center">*/}
+                                                {/*    {story.fullName}*/}
+                                                {/*</p>*/}
                                             </div>
 
                                         </div>
@@ -183,8 +250,7 @@ const PreviewStoryComponent = () => {
             </>
         );
     };
-
-    const ScrollHandleButton = ()=>{
+    const ScrollHandleButton = () => {
         return (
             <div className="flex items-center justify-between align-center  w-[125%]  z-50">
                 {
@@ -215,7 +281,9 @@ const PreviewStoryComponent = () => {
             </div>
         )
     }
+
     const handleScroll = (direction) => {
+        setPreviewControl(0)
         if (direction === "add") {
             setScrollMaxCount(StoryData.length - 3)
             setScrollCount(scrollCount + 1)
@@ -225,7 +293,6 @@ const PreviewStoryComponent = () => {
         }
 
     }
-
 
     if(!StoryData){
         return (
@@ -251,7 +318,9 @@ const PreviewStoryComponent = () => {
     }
     else {
         return (
-            <div className="container h-screen mx-auto flex flex-row items-center relative ">
+            <div
+                className="container h-screen mx-auto flex flex-row items-center relative "
+            >
                 <Header/>
                 <div className="grid grid-cols-6 mx-auto h-full gap-8 py-6  max-w-[1400px] max-h-[750px] ">
                     <div className="col-span-1 py-36 opacity-25 cursor-pointer">
@@ -266,7 +335,7 @@ const PreviewStoryComponent = () => {
                             id={1 + scrollCount}
                         />
                     </div>
-                    <div className="col-span-2 relative cursor-pointer">
+                    <div className="col-span-2 relative cursor-pointer ">
                         <ScrollHandleButton/>
                         <StoryActiveCard
                             story={StoryData}

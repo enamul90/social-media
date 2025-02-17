@@ -11,6 +11,8 @@ const StoryComponent = () => {
     const scrollRef = useRef(null);
     const {StoryData, StoryReq} = StoryStore()
 
+    console.log(StoryData)
+
     useEffect(() => {
         (
            async ()=>{
@@ -134,6 +136,8 @@ const StoryComponent = () => {
                         </div>
                     </motion.div>
 
+
+
                     {
                         StoryData.map((item, i) => {
                             const previewID = i -2 ;
@@ -155,7 +159,7 @@ const StoryComponent = () => {
                                      border-[3px] border-sky-200 mx-auto
                                      "
                                     >
-                                        <img src={item.user.profile} alt="profile" className="min-w-full min-h-full"/>
+                                        <img src={item.profile} alt="profile" className="min-w-full min-h-full"/>
                                     </div>
                                 </motion.div>
                             )
